@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-50: hsla(var(--hue), var(--sat), 95%, 1);
+  --color-primary-100: hsla(var(--hue), var(--sat), 90%, 1);
+  --color-primary-200: hsla(var(--hue), var(--sat), 80%, 1);
+  --color-primary-300: hsla(var(--hue), var(--sat), 70%, 1);
+  --color-primary-400: hsla(var(--hue), var(--sat), 60%, 1);
+  --color-primary: hsla(var(--hue), var(--sat), var(--light), 1);
+  --color-primary-light: hsla(var(--hue), var(--sat), calc(var(--light) + 10%), 1);
+  --color-primary-dark: hsla(var(--hue), var(--sat), calc(var(--light) - 10%), 1);
+
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-surface-alt: var(--color-surface-alt);
+  --color-surface-glass: var(--color-surface-glass);
+  
+  --color-text: var(--color-text);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+  
+  --color-border: var(--color-border);
+  --color-border-strong: var(--color-border-strong);
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-xl: var(--shadow-xl);
+  
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+
+  --animate-fade-in-up: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  --animate-scale-in: scaleIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@layer base {
+  :root {
+    /* 
+      Theme Engine: 
+      Reference site uses a Gold/Amber primary. 
+      Hue 41, Saturation 76%, Lightness 48% is a solid rich gold.
+    */
+    --hue: 41;
+    --sat: 76%;
+    --light: 48%;
+
+    /* Light Theme Foundations */
+    --color-bg: #FFFFFF;
+    --color-surface: #FFFFFF;
+    --color-surface-alt: #F8F9FA;
+    --color-surface-glass: rgba(255, 255, 255, 0.85);
+    
+    --color-text: #0F172A; /* Slate-900 */
+    --color-text-secondary: #334155; /* Slate-700 */
+    --color-text-muted: #64748B; /* Slate-500 */
+    
+    --color-border: #F1F5F9; /* Slate-100 */
+    --color-border-strong: #E2E8F0; /* Slate-200 */
+
+    /* Soft, airy shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.02), 0 1px 3px 0 rgba(0, 0, 0, 0.02);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Since we moved to a pure light aesthetic based on the reference, dark mode is effectively disabled here, but the variables are kept so the toggle doesn't break everything instantly. It just mimics light mode for now. */
+  .dark {
+    --color-bg: #0F172A;
+    --color-surface: #1E293B;
+    --color-surface-alt: #0F172A;
+    --color-surface-glass: rgba(30, 41, 59, 0.85);
+
+    --color-text: #F8FAFC;
+    --color-text-secondary: #CBD5E1;
+    --color-text-muted: #94A3B8;
+
+    --color-border: #334155;
+    --color-border-strong: #475569;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+  }
+  
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text-secondary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-text);
+    font-weight: 700;
+  }
+}
+
+@layer utilities {
+  .clip-text {
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+  
+  .glass-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+  }
+  
+  .nav-link {
+    position: relative;
+    padding-bottom: 0.25rem;
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: var(--color-primary);
+    transition: width 0.3s ease;
+  }
+  
+  .nav-link:hover::after {
+    width: 100%;
+  }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
